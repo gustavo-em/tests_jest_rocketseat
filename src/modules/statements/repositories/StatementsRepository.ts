@@ -24,13 +24,14 @@ export class StatementsRepository implements IStatementsRepository {
     user_id,
     amount,
     description,
-    type
+    type,
   }: ICreateStatementDTO): Promise<Statement> {
     const statement = this.repository.create({
       user_id,
       amount,
       description,
-      type
+      type,
+      sender_id: '0'
     });
 
     return this.repository.save(statement);
@@ -69,6 +70,8 @@ export class StatementsRepository implements IStatementsRepository {
   }
 
   async createTransfer({ user_to_id, amount, description, id_sender }: IGetCreateTransfer): Promise<Statement> {
+
+
 
     const statement = this.repository.create({
       user_id: user_to_id,

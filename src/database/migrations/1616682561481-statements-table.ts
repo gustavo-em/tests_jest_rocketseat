@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { IsNull, MigrationInterface, QueryRunner, Table } from "typeorm";
 
 export class accountsTable1616682561481 implements MigrationInterface {
 
@@ -16,6 +16,12 @@ export class accountsTable1616682561481 implements MigrationInterface {
           type: 'uuid',
         },
         {
+          name: 'sender_id',
+          type: 'varchar',
+          default: null,
+          isNullable: true
+        },
+        {
           name: 'description',
           type: 'varchar',
         },
@@ -28,7 +34,7 @@ export class accountsTable1616682561481 implements MigrationInterface {
         {
           name: 'type',
           type: 'enum',
-          enum: ['deposit', 'withdraw']
+          enum: ['deposit', 'withdraw', 'transfer']
         },
         {
           name: 'created_at',
@@ -45,7 +51,7 @@ export class accountsTable1616682561481 implements MigrationInterface {
         {
           name: 'statements',
           columnNames: ['user_id'],
-          referencedTableName: 'users',
+          referencedTableName: 'usersentity',
           referencedColumnNames: ['id'],
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE'

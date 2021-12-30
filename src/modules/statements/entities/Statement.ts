@@ -24,7 +24,7 @@ export class Statement {
   @Column('uuid')
   user_id: string;
 
-  @Column({ default: null })
+  @Column({ default: '0' })
   sender_id: string;
 
   @ManyToOne(() => User, user => user.statement)

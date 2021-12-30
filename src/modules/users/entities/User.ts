@@ -9,7 +9,7 @@ import { v4 as uuid } from 'uuid';
 import 'reflect-metadata';
 import { Statement } from '../../statements/entities/Statement';
 
-@Entity('users')
+@Entity('usersentity')
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id?: string;

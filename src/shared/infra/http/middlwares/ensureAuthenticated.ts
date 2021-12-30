@@ -25,6 +25,7 @@ export async function ensureAuthenticated(
   try {
     const { sub: user_id } = verify(token, authConfig.jwt.secret) as IPayload;
 
+    console.log(user_id)
     request.user = {
       id: user_id,
     };
