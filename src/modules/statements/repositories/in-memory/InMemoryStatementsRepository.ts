@@ -1,9 +1,15 @@
+import { IGetCreateTransfer } from './../../useCases/transferMoneyToUser/IGetCreateTransfer';
 import { Statement } from "../../entities/Statement";
 import { ICreateStatementDTO } from "../../useCases/createStatement/ICreateStatementDTO";
 import { IGetBalanceDTO } from "../../useCases/getBalance/IGetBalanceDTO";
 import { IGetStatementOperationDTO } from "../../useCases/getStatementOperation/IGetStatementOperationDTO";
 import { IStatementsRepository } from "../IStatementsRepository";
 
+enum OperationType {
+  DEPOSIT = 'deposit',
+  WITHDRAW = 'withdraw',
+  TRANSFER = 'transfer',
+}
 export class InMemoryStatementsRepository implements IStatementsRepository {
   private statements: Statement[] = [];
 
@@ -27,8 +33,7 @@ export class InMemoryStatementsRepository implements IStatementsRepository {
   async getUserBalance({ user_id, with_statement = false }: IGetBalanceDTO):
     Promise<
       { balance: number } | { balance: number, statement: Statement[] }
-    >
-  {
+    > {
     const statement = this.statements.filter(operation => operation.user_id === user_id);
 
     const balance = statement.reduce((acc, operation) => {
@@ -48,4 +53,23 @@ export class InMemoryStatementsRepository implements IStatementsRepository {
 
     return { balance }
   }
+
+  async createTransfer({ user_to_id, amount, description, id_sender }: IGetCreateTransfer): Promise<Statement> {
+
+    let statementOne = new Statement();
+
+
+    Object.assign(statementOne, {
+      user_id: user_to_id,
+      amount,
+      description,
+      sender_id: id_sender,
+      type: 'transfer' as OperationType
+    })
+
+
+    return statementOne;
+  }
+
+
 }
