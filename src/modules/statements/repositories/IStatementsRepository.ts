@@ -1,3 +1,4 @@
+import { IGetCreateTransfer } from './../useCases/transferMoneyToUser/IGetCreateTransfer';
 import { Statement } from "../entities/Statement";
 import { ICreateStatementDTO } from "../useCases/createStatement/ICreateStatementDTO";
 import { IGetBalanceDTO } from "../useCases/getBalance/IGetBalanceDTO";
@@ -9,4 +10,6 @@ export interface IStatementsRepository {
   getUserBalance: (data: IGetBalanceDTO) => Promise<
     { balance: number } | { balance: number, statement: Statement[] }
   >;
+
+  createTransfer(data: IGetCreateTransfer): Promise<Statement>;
 }
